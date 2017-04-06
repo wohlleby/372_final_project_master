@@ -4,9 +4,10 @@
 #include "timer.h"
 #include "switch.h"
 #include "drinkList.h"
+#include "serial.h"
 
 typedef enum stateType_enum{
-  startMessage, drinkMenu
+  startMessage, drinkMenu, sendSerial
 }stateType;
 
 int main() {
@@ -20,6 +21,7 @@ int main() {
   initTimer1();
   initLCD();
   initSwitches();
+  initSerial1();
 
 
   while(1) {
@@ -43,7 +45,7 @@ int main() {
 
             resetCursor();
 
-            //state = drinkMenu;
+            state = drinkMenu;
           break;
 
           case drinkMenu:
@@ -63,20 +65,29 @@ int main() {
               else {
               drinkNumber--;
               }
+
+              resetCursor();
+              clearDisplay();
             } //end previous button pressed
 
-            if(!(PINB & (1 << PINB3))) { //if select pressed
+            if(!(PINB & (1 << PINB5))) { //if select pressed
               _delay_ms(100);
-              while (!(PINB & (1 << PINB3))) { //while select still pressed
+              while (!(PINB & (1 << PINB5))) { //while select still pressed
 
               }
               _delay_ms(100);
 
+
+              resetCursor();
+              clearDisplay();
+
+
+              state = sendSerial;
             } //end select pressed
 
-            if(!(PINB & (1 << PINB3))) { //if next pressed
+            if(!(PINB & (1 << PINB6))) { //if next pressed
               _delay_ms(100);
-              while (!(PINB & (1 << PINB3))) { //while next still pressed
+              while (!(PINB & (1 << PINB6))) { //while next still pressed
 
               }
               _delay_ms(100);
@@ -87,9 +98,30 @@ int main() {
               else {
                 drinkNumber++;
               }
+
+              resetCursor();
+              clearDisplay();
             }//end next pressed
 
+            resetCursor();
+
           break; //end drinkMenu case
+
+
+          case sendSerial:
+
+            writeString("Sending drink");
+
+            resetCursor();
+
+            USART_Transmit('a');
+
+            delayMs(10000);
+
+            clearDisplay();
+
+            state = startMessage;
+          break; //end sendSerial
       }
 
 
