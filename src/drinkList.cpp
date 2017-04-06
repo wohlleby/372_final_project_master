@@ -1,7 +1,11 @@
+//Developer: team 212
+//purpose:  To initialize the drink list with hardcoded names for the user to choose from
+
 
 #include "drinkList.h"
 #include <stdlib.h>
 
+//dynamically allocate a drink list and hard code it with names
 const char ** initDrinkList() {
 
   //room for 10 drinks, typecasting because gcc is a little bitch

@@ -1,3 +1,8 @@
+//Developer: team 212
+//main.cpp controls the lcd and communication between the master and slave
+//arduinos.  It also sets up the button interface that the user can use to
+//scroll through the drink list and select one.
+
 #include <Arduino.h>
 #include <avr/io.h>
 #include "lcd.h"
@@ -29,78 +34,73 @@ int main() {
       switch(state) {
 
           case startMessage:
-            writeString("Eat my ass");
 
+            writeString("DRINKMASTER5000");
             delayMs(10000);
-
             clearDisplay();
-
             resetCursor();
-
-            writeString("plebs");
-
+            writeString("Team 212");
             delayMs(10000);
-
             clearDisplay();
-
             resetCursor();
 
             state = drinkMenu;
+
           break;
 
           case drinkMenu:
 
-            writeString(drinkList[drinkNumber]); //display current drink
+              writeString(drinkList[drinkNumber]); //display current drink
 
-            if(!(PINB & (1 << PINB4))) { //if previous button pressed
-              _delay_ms(100);
-              while (!(PINB & (1 << PINB4))) { //while button still pressed
+              if(!(PINB & (1 << PINB4))) { //if previous button pressed
+                  _delay_ms(100);
+                  while (!(PINB & (1 << PINB4))) { //while button still pressed
 
-              }
-              _delay_ms(100);
+                  }
+                  _delay_ms(100);
 
-              if(drinkNumber == 0) { //decrement the drink number
-                drinkNumber = 9;
-              }
-              else {
-              drinkNumber--;
-              }
+                  if(drinkNumber == 0) { //decrement the drink number
+                    drinkNumber = 9;
+                  }
+                  else {
+                  drinkNumber--;
+                  }
 
-              resetCursor();
-              clearDisplay();
-            } //end previous button pressed
+                  resetCursor();
+                  clearDisplay();
+              } //end previous button pressed
 
-            if(!(PINB & (1 << PINB5))) { //if select pressed
-              _delay_ms(100);
-              while (!(PINB & (1 << PINB5))) { //while select still pressed
+              if(!(PINB & (1 << PINB5))) { //if select pressed
+                  _delay_ms(100);
+                  while (!(PINB & (1 << PINB5))) { //while select still pressed
 
-              }
-              _delay_ms(100);
-
-
-              resetCursor();
-              clearDisplay();
+                  }
+                  _delay_ms(100);
 
 
-              state = sendSerial;
-            } //end select pressed
+                  resetCursor();
+                  clearDisplay();
 
-            if(!(PINB & (1 << PINB6))) { //if next pressed
-              _delay_ms(100);
-              while (!(PINB & (1 << PINB6))) { //while next still pressed
 
-              }
-              _delay_ms(100);
+                  state = sendSerial;
+              } //end select pressed
 
-              if(drinkNumber == 9) {
-                drinkNumber = 0;
-              }
-              else {
-                drinkNumber++;
-              }
+              if(!(PINB & (1 << PINB6))) { //if next pressed
+                  _delay_ms(100);
+                  while (!(PINB & (1 << PINB6))) { //while next still pressed
 
-              resetCursor();
-              clearDisplay();
+                  }
+                  _delay_ms(100);
+
+                  if(drinkNumber == 9) {
+                    drinkNumber = 0;
+                  }
+                  else {
+                    drinkNumber++;
+                  }
+
+                  resetCursor();
+                  clearDisplay();
             }//end next pressed
 
             resetCursor();
@@ -114,7 +114,7 @@ int main() {
 
             resetCursor();
 
-            USART_Transmit('a');
+            USART_Transmit('a'); //send anything for test
 
             delayMs(10000);
 
@@ -122,13 +122,11 @@ int main() {
 
             state = startMessage;
           break; //end sendSerial
-      }
+      }//end switch
 
-
-
-  }
+  }//end while(1)
 
 
 
     return 0;
-}
+}//end main

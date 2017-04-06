@@ -1,8 +1,11 @@
-#include <avr/io.h>
+//Developer: team 212
+//purpose: to initialize and enable the use of uart serial communications.
 
+#include <avr/io.h>
 #include "serial.h"
 #include "timer.h"
 
+//This function initalizes uart use
 void initSerial1(){
   UCSR1A |= (1 << U2X1); // doubled the rate  // enable the interrupts and transmit
   UCSR1B |= (1 << TXCIE1| 1 << TXEN1);  //Sets data size to be 8 bits (1 character)
@@ -12,12 +15,15 @@ void initSerial1(){
   UBRR1L = 207; // baud rate 9600
 }
 
+//prints the udr1 register to console, not necessary anymore
 void printToConsole(unsigned char s)
 {
   while ((UCSR1A & (1<<UDRE1))  == 0){};
    UDR1 = s;
    delayMs(10);
 }
+
+//this function is used to trasmmit a character of uart
 void USART_Transmit( unsigned char data )
 {
   /* Wait for empty transmit buffer */
@@ -26,6 +32,8 @@ void USART_Transmit( unsigned char data )
   UDR1 = data;
   delayMs(10);
 }
+
+//this function is used to receive transmissions over uart
 unsigned char USART_Receive( void )
 {
   /* Wait for data to be received */

@@ -1,3 +1,4 @@
+//Developer: team 212
 // Description: This file implements functions to operate an LCD
 //----------------------------------------------------------------------//
 
@@ -193,12 +194,14 @@ void initLCDProcedure(){
 
 }
 
+//clears the display
 void clearDisplay() {
 
   writeDataWithUsDelay(0b0000, 0);
   writeDataWithUsDelay(0b0001, 1640);
 }
 
+//resets the cursor to the top left corner (position 00)
 void resetCursor() {
 
   writeDataWithUsDelay(0b1000, 0);

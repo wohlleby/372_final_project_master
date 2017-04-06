@@ -1,11 +1,11 @@
+//Developer: team 212
 // Description: This file implements the initialization of an external
 // switch.
 //----------------------------------------------------------------------//
 #include "switch.h"
 #include <avr/io.h>
-/*
- * Initializes pull-up resistor on PB3 and sets it into input mode
- */
+
+ //Initializes pull-up resistor on PB4, 5, and 6 and sets them into input mode
 void initSwitches(){
 
   PORTB |= (1 << PORTB4);

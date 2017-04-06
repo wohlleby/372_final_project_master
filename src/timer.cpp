@@ -1,13 +1,17 @@
+//Developer: team 212
+//this file contains a MS timer and Us timer and their init functions
+
 #include "timer.h"
 #include <avr/io.h>
-void initTimer3(){ //init timer to ctc mode
+
+void initTimer3(){ //init timer 3 to ctc mode
 
   TCCR3B |= (1 << WGM32);
   TCCR3B &= ~(1 << CS30 | 1 << CS32 | 1 << CS31);
 
 }
 
-void initTimer1(){ //init timer to ctc mode
+void initTimer1(){ //init timer 1 to ctc mode
 
   TCCR1A &= ~(1 << WGM10 | 1 << WGM11);
   TCCR1B &= ~(1 << WGM13);
