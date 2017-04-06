@@ -19,5 +19,7 @@ void writeString(const char *string);
 void writeCharacter(unsigned char character);
 void writeDataWithUsDelay(unsigned char data, unsigned int delay);
 void writeCommandWithUsDelay(unsigned char command, unsigned int delay);
+void clearDisplay();
+void resetCursor();
 
 #endif

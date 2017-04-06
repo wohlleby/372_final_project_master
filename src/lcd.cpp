@@ -11,25 +11,25 @@
 /* Asserts Logic High on Enable Pin
 */
 void enableHigh(){
-  PORTB |= (1 << PORTB4);
+  PORTA |= (1 << PORTA4);
 }
 
 /* Asserts Logic Low on Enable Pin
 */
 void enableLow(){
-  PORTB &= ~(1 << PORTB4);
+  PORTA &= ~(1 << PORTA4);
 }
 
 /* Asserts Logic Low on RS Pin
 */
 void rsLow(){
-  PORTB &= ~(1 << PORTB5);
+  PORTA &= ~(1 << PORTA5);
 }
 
 /* Asserts Logic High on RS Pin
 */
 void rsHigh(){
-  PORTB |= (1 << PORTB5);
+  PORTA |= (1 << PORTA5);
 }
 
 /* Initializes Tri-state for LCD pins and calls initialization procedure.
@@ -58,7 +58,7 @@ void sendCommand(){
 /* Initializes all pins related to the LCD to be outputs
 */
 void initLCDPins(){
-  DDRB |= (1 << DDB4 | 1 << DDB5);
+  DDRA |= (1 << DDA4 | 1 << DDA5);
 
   DDRA |= ((1 << DDA0) | (1 << DDA1) | (1 << DDA2) | ( 1 << DDA3));
 }
@@ -191,4 +191,16 @@ void initLCDProcedure(){
   //PORTA = 0b00001000;
   //testprint();
 
+}
+
+void clearDisplay() {
+
+  writeDataWithUsDelay(0b0000, 0);
+  writeDataWithUsDelay(0b0001, 1640);
+}
+
+void resetCursor() {
+
+  writeDataWithUsDelay(0b1000, 0);
+  writeDataWithUsDelay(0b0000, 40);
 }

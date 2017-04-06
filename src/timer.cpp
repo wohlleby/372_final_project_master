@@ -9,8 +9,9 @@ void initTimer3(){ //init timer to ctc mode
 
 void initTimer1(){ //init timer to ctc mode
 
+  TCCR1A &= ~(1 << WGM10 | 1 << WGM11);
+  TCCR1B &= ~(1 << WGM13);
   TCCR1B |= (1 << WGM12);
-  TCCR1B &= ~(1 << CS10 | 1 << CS12 | 1 << CS11);
 
 }
 
