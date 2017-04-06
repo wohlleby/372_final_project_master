@@ -6,6 +6,15 @@ void initTimer3(){ //init timer to ctc mode
   TCCR3B &= ~(1 << CS30 | 1 << CS32 | 1 << CS31);
 
 }
+
+void initTimer1(){ //init timer to ctc mode
+
+  TCCR1B |= (1 << WGM12);
+  TCCR1B &= ~(1 << CS10 | 1 << CS12 | 1 << CS11);
+
+}
+
+
 //delay for "delay" amount of milliseconds
 void delayMs(unsigned int delay){
 
@@ -24,5 +33,31 @@ void delayMs(unsigned int delay){
 
   TIFR3 |= (1 << OCF3A); //clear flag
   TCCR3B &= ~(1 << CS31 | 1 << CS30 | 1 << CS32); //turn off timer
+
+}
+
+void delayUs(unsigned int delay){
+  // clear the timer
+  TCNT1H = 0;
+  TCNT1L = 0;
+
+  // calculate the TOP value and assign it to OCR1A
+  unsigned int ticks = delay*2;
+  OCR1AH = ticks >> 8;
+  OCR1AL = ticks & 0x00FF;
+
+  // Turn on the timer
+  TCCR1B &= ~(1 << CS10 | 1 << CS12); //prescaler of 8
+  TCCR1B |= (1 << CS11);
+
+  // Do nothing while the OCF1A flag is not up
+  while(!(TIFR1 & (1 << OCF1A)));
+
+  // Clear the OCF1A flag
+  TIFR1 |= (1 << OCF1A);
+
+  // Turn off the timer
+
+  TCCR1B &= ~(1 << CS10 | 1 << CS11 | 1 << CS12);
 
 }

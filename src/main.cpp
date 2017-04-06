@@ -17,6 +17,7 @@ int main() {
   const char** drinkList = initDrinkList();
 
   initTimer3();
+  initTimer1();
   initLCD();
   initSwitches();
 
@@ -26,7 +27,7 @@ int main() {
       switch(state) {
 
           case startMessage:
-
+            writeString("tequila");
           break;
       }
 
