@@ -4,6 +4,7 @@
 #include <avr/io.h>
 #include "serial.h"
 #include "timer.h"
+#include <Arduino.h>
 
 //This function initalizes uart use
 void initSerial1(){
@@ -15,13 +16,18 @@ void initSerial1(){
   UBRR1L = 207; // baud rate 9600
 }
 
-//prints the udr1 register to console, not necessary anymore
-void printToConsole(unsigned char s)
+
+//Waits for a message from the master
+unsigned char USART_Receive()
 {
-  while ((UCSR1A & (1<<UDRE1))  == 0){};
-   UDR1 = s;
-   delayMs(10);
+/* Wait for data to be received */
+while ( !(UCSR1A & (1<<RXC1)) );
+/* Get and return received data from buffer */
+
+return UDR1;
 }
+
+
 
 //this function is used to trasmmit a character of uart
 void USART_Transmit( unsigned char data )
@@ -31,13 +37,4 @@ void USART_Transmit( unsigned char data )
   /* Put data into buffer, sends the data */
   UDR1 = data;
   delayMs(10);
-}
-
-//this function is used to receive transmissions over uart
-unsigned char USART_Receive( void )
-{
-  /* Wait for data to be received */
-  while ( !(UCSR1A & (1<<RXC1)) ){}
-  /* Get and return received data from buffer */
-  return UDR1;
 }

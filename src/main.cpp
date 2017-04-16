@@ -12,7 +12,7 @@
 #include "serial.h"
 
 typedef enum stateType_enum{
-  startMessage, drinkMenu, sendSerial
+  startMessage, drinkMenu, sendSerial, dispensingDrink
 }stateType;
 
 int main() {
@@ -21,6 +21,8 @@ int main() {
 
   int drinkNumber = 0; //keep track of current drink we're on for serial comms
   const char** drinkList = initDrinkList();
+
+  unsigned char serialReceived;
 
   initTimer3();
   initTimer1();
@@ -114,15 +116,48 @@ int main() {
 
             resetCursor();
 
-            USART_Transmit('a'); //send anything for test
+            USART_Transmit('a' + drinkNumber); //send anything for test
 
-            delayMs(10000);
+            delayMs(100);
 
             clearDisplay();
+            resetCursor();
 
-            state = startMessage;
+            state = dispensingDrink;
           break; //end sendSerial
+
+
+          case dispensingDrink:
+
+            writeString("Pouring drink");
+
+            serialReceived = USART_Receive();
+            if(serialReceived == 's') { //cup removed while pouring
+
+              clearDisplay();
+              resetCursor();
+              writeString("No Cup Detected");
+
+              while(serialReceived != 'r'){ //wait for the cup to be replaced
+                serialReceived = USART_Receive();
+              }
+
+            }
+
+            if(serialReceived == 't') { //drink finished
+
+              clearDisplay();
+              resetCursor();
+              state = startMessage;
+            }
+
+            resetCursor();
+
+          break;//end dispensingDrink
+
       }//end switch
+
+
 
   }//end while(1)
 

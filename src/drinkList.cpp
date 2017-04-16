@@ -16,8 +16,8 @@ const char ** initDrinkList() {
     drinkList[i] = (const char*) malloc(15 * sizeof(char));
   }
 
-  drinkList[0] = "drink one";
-  drinkList[1] = "drink two";
+  drinkList[0] = "Prime/Purge";
+  drinkList[1] = "Cran-Apple";
   drinkList[2] = "drink three";
   drinkList[3] = "drink four";
   drinkList[4] = "drink five";
