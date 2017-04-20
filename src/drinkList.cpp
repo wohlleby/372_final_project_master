@@ -17,11 +17,11 @@ const char ** initDrinkList() {
   }
 
   drinkList[0] = "Prime/Purge";
-  drinkList[1] = "Cran-Apple";
-  drinkList[2] = "drink three";
-  drinkList[3] = "drink four";
-  drinkList[4] = "drink five";
-  drinkList[5] = "drink six";
+  drinkList[1] = "Pump 1";
+  drinkList[2] = "Pump 2";
+  drinkList[3] = "Pump 3";
+  drinkList[4] = "Pump 4";
+  drinkList[5] = "Pump 5";
   drinkList[6] = "drink seven";
   drinkList[7] = "drink eight";
   drinkList[8] = "drink nine";

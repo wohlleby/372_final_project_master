@@ -9,7 +9,7 @@
 //This function initalizes uart use
 void initSerial1(){
   UCSR1A |= (1 << U2X1); // doubled the rate  // enable the interrupts and transmit
-  UCSR1B |= (1 << TXCIE1| 1 << TXEN1);  //Sets data size to be 8 bits (1 character)
+  UCSR1B |= (1 << TXCIE1| 1 << TXEN1 | 1 << RXEN1);  //Sets data size to be 8 bits (1 character)
   UCSR1B &= ~(1 << UCSZ12);
   UCSR1C |= (1 << UCSZ11 | 1 << UCSZ10| 1<< UPM11);// set to even parity
   UCSR1C &= ~(1 << USBS1);

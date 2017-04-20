@@ -131,7 +131,12 @@ int main() {
 
             writeString("Pouring drink");
 
+
+
             serialReceived = USART_Receive();
+
+            Serial.println("w");
+
             if(serialReceived == 's') { //cup removed while pouring
 
               clearDisplay();
@@ -141,7 +146,9 @@ int main() {
               while(serialReceived != 'r'){ //wait for the cup to be replaced
                 serialReceived = USART_Receive();
               }
-
+              
+              clearDisplay();
+              resetCursor();
             }
 
             if(serialReceived == 't') { //drink finished
