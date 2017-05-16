@@ -1,5 +1,5 @@
-Authors: Nicholas Wohlleb, Ran Zhao, Horacio Valencia, Connor Culloden
-NetIDs: wohlleb, rzhao, horaciovalencia, cullodenc
+Authors: Nicholas Wohlleb
+NetIDs: wohlleb
 Date: 4/1/17
 Project Name: project_master
 

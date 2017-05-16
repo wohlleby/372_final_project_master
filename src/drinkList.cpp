@@ -22,10 +22,10 @@ const char ** initDrinkList() {
   drinkList[3] = "Pump 3";
   drinkList[4] = "Pump 4";
   drinkList[5] = "Pump 5";
-  drinkList[6] = "drink seven";
-  drinkList[7] = "drink eight";
-  drinkList[8] = "drink nine";
-  drinkList[9] = "drink ten";
+  drinkList[6] = "Mango Pineapple";
+  drinkList[7] = "Sparkling Apple";
+  drinkList[8] = "Cran Apple";
+  drinkList[9] = "Everything";
 
   return drinkList;
 }
