@@ -1,7 +1,7 @@
 //Developer: team 212
 //main.cpp controls the lcd and communication between the master and slave
-//arduinos.  It also sets up the button interface that the user can use to
-//scroll through the drink list and select one.
+//arduinos.  It also contains the main state machine for the master, which
+//controls contains the switch logic and the logic for sending drink via serial
 
 #include <Arduino.h>
 #include <avr/io.h>
@@ -35,6 +35,7 @@ int main() {
 
       switch(state) {
 
+          //Display initial welcome message
           case startMessage:
 
             writeString("DRINKMASTER5000");
@@ -50,6 +51,7 @@ int main() {
 
           break;
 
+          //default, displays the drink list and waits for switch to be pressed
           case drinkMenu:
 
               writeString(drinkList[drinkNumber]); //display current drink
@@ -110,6 +112,7 @@ int main() {
           break; //end drinkMenu case
 
 
+          //state to send the drink order number to the slave
           case sendSerial:
 
             writeString("Sending drink");
@@ -126,16 +129,15 @@ int main() {
             state = dispensingDrink;
           break; //end sendSerial
 
-
+          //in the process of dispensing drink, wait for communication from slave
           case dispensingDrink:
 
             writeString("Pouring drink");
 
 
-
+            //wait for information from the slave
             serialReceived = USART_Receive();
 
-            Serial.println("w");
 
             if(serialReceived == 's') { //cup removed while pouring
 
@@ -146,7 +148,7 @@ int main() {
               while(serialReceived != 'r'){ //wait for the cup to be replaced
                 serialReceived = USART_Receive();
               }
-              
+
               clearDisplay();
               resetCursor();
             }
